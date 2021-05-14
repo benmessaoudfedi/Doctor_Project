@@ -1,32 +1,42 @@
-
 {% load static %}
 
+<nav class="navbar navbar-default">
+	            <div class="container-fluid">
+					<div class="navbar-minimize">
+						<button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-more-alt"></i></button>
+					</div>
+	                <div class="navbar-header">
+	                    <button type="button" class="navbar-toggle">
+	                        <span class="sr-only">Toggle navigation</span>
+	                        <span class="icon-bar bar1"></span>
+	                        <span class="icon-bar bar2"></span>
+	                        <span class="icon-bar bar3"></span>
+	                    </button>
+	                    <a class="navbar-brand" href="#Dashboard">
+							Dashboard
+						</a>
+	                </div>
+	                <div class="collapse navbar-collapse">
 
-<style>
-  .hello-msg{
-    font-size: 18px;
-    color: #fff;
-    margin-right: 20px;
-  }
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
- <img src="{% static 'images/logo.png' %}">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'home' %}">Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="##">Products</a>
-      </li>
-    </ul>
-  </div>
-
-  <span class="hello-msg">Hello, {{request.user}}</span>
-  <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
-
-</nav>
+	                    <ul class="nav navbar-nav navbar-right">
+	                        <li class="dropdown">
+	                            <a href="#notifications" class="btn-rotate" data-toggle="dropdown">
+	                                <i class="ti-settings"></i>
+									<p class="">
+                                        {{ request.user.first_name }} {{ request.user.last_name }}
+										<b class="caret"></b>
+									</p>
+	                            </a>
+	                            <ul class="dropdown-menu">
+	                                <li><a href="#not1">Notification 1</a></li>
+	                                <li><a href="#another">Another notification</a></li>
+                                    <li><a class="" href="/logout" >
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    Logout
+                                    </a></li>
+	                            </ul>
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </nav>
