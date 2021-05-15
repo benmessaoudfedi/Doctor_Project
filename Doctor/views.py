@@ -46,7 +46,7 @@ def registerPage(request):
                 messages.success(request, 'Account was created for ' + usermes)
                 doctor = doctorForm.save(commit=False)
                 doctor.user = user
-                doctor = doctor.save()
+                doctor.save()
                 my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
                 my_doctor_group[0].user_set.add(user)
             return redirect('login')
@@ -92,3 +92,26 @@ def home(request):
     else:
         return render(request, 'accounts/doctor_wait_for_approval.html')
 
+
+@login_required(login_url='login')
+def profileview(request):
+    args = {'user': request.user}
+    return render(request, 'accounts/profileview.html', args)
+
+
+@login_required(login_url='login')
+def profileedit(request):
+    userForm = form.EditProfileForm(instance=request.user)
+    doctorForm = form.DoctorForm(instance=request.user.doctor)
+    if request.method == 'POST':
+        userForm = form.EditProfileForm(request.POST, instance=request.user)
+        doctorForm = form.DoctorForm(request.POST, request.FILES, instance=request.user.doctor)
+        if userForm.is_valid() and doctorForm.is_valid():
+            user = userForm.save()
+            user.save()
+            doctor = doctorForm.save(commit=False)
+            doctor.user = user
+            doctor.save()
+        return redirect('/profile/edit')
+    mydict = {'userForm': userForm, 'doctorForm': doctorForm}
+    return render(request, 'accounts/profileedit.html', context=mydict)

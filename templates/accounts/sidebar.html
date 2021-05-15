@@ -13,12 +13,12 @@
 				<div class="user">
 	                <div class="info">
 						<div class="photo">
-		                    <img src="../../static/assets/img/faces/face-2.jpg" />
+		                    <img src="/{{ request.user.doctor.profile_pic }}" />
 		                </div>
 
 	                    <a data-toggle="collapse" href="#collapseExample" class="collapsed">
 	                        <span>
-								Chet Faker
+								{{ request.user.first_name }} {{ request.user.last_name }}
 		                        <b class="caret"></b>
 							</span>
 	                    </a>
@@ -27,13 +27,13 @@
 	                    <div class="collapse" id="collapseExample">
 	                        <ul class="nav">
 	                            <li>
-									<a href="#profile">
+									<a href="/profile">
 										<span class="sidebar-mini">Mp</span>
 										<span class="sidebar-normal">My Profile</span>
 									</a>
 								</li>
 	                            <li>
-									<a href="#edit">
+									<a href="/profile/edit">
 										<span class="sidebar-mini">Ep</span>
 										<span class="sidebar-normal">Edit Profile</span>
 									</a>

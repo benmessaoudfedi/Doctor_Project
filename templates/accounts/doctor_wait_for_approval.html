@@ -22,7 +22,7 @@
 	                <div class="col-md-6 ml-auto mr-auto">
         	           <div class="profile">
 	                        <div class="avatar">
-	                            <img src="{% static '/assets/DoctorProfilePic/photo_default.jpg' %}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+	                            <img src="/{{ request.user.doctor.profile_pic }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title">{{ request.user.first_name  }} {{ request.user.last_name  }} </h3>

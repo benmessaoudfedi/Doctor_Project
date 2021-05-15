@@ -20,3 +20,9 @@ class DoctorForm(forms.ModelForm):
     class Meta:
         model = models.Doctor
         fields = ['address', 'mobile', 'department', 'status', 'profile_pic']
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ['first_name', 'last_name', 'username', 'email']
