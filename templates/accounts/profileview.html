@@ -14,7 +14,7 @@
                             <div class="author">
                                 <img class="avatar border-white" src="/{{ user.doctor.profile_pic }}" alt="..."/>
                                 <h4 class="card-title">{{ user.first_name }} {{ user.last_name }}<br/>
-                                    <a href="#"><small>{{ user.username }}</small></a>
+                                    <a href="/profile"><small>{{ user.username }}</small></a>
                                 </h4>
                             </div>
 
@@ -46,6 +46,16 @@
                                     <div class="form-group">
                                         <label>Address</label>
                                         <p class="">{{ user.doctor.address }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a href="/change-password" class="btn btn-primary btn-fill btn-wd">Change
+                                            Password</a>
+                                        <a href="/profile/edit" class="btn btn-primary btn-fill btn-wd">Edit Profile</a>
 
                                     </div>
                                 </div>

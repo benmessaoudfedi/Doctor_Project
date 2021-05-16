@@ -7,7 +7,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                                <div class="col-lg-4 col-md-5">
+                <div class="col-lg-4 col-md-5">
                     <div class="card card-user">
                         <div class="image">
                             <img src="{% static '/assets/img/background.jpg' %}" alt="..."/>
@@ -48,6 +48,15 @@
                                     <div class="form-group">
                                         <label>Address</label>
                                         <p class="">{{ user.doctor.address }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a href="/change-password" class="btn btn-primary btn-fill btn-wd">Change
+                                            Password</a>
 
                                     </div>
                                 </div>
@@ -125,12 +134,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Profile Picture</label>
-                                            {% render_field doctorForm.profile_pic  class="form-control" placeholder="Profile Picture" %}
+                                            {% render_field doctorForm.profile_pic class="form-control" placeholder="Profile Picture" %}
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-center">
+                                <div class="col-md-6">
                                     <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
                                 </div>
                                 <div class="clearfix"></div>

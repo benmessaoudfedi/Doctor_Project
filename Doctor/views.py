@@ -1,9 +1,10 @@
 from pyexpat.errors import messages
 from django.contrib.auth.models import Group
-
+from django.contrib.auth import update_session_auth_hash
+from django.urls import reverse
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import PasswordChangeForm
 
-from Doctor.form import CreateUserForm
 from Doctor import form
 
 from django.shortcuts import render, redirect
@@ -115,3 +116,19 @@ def profileedit(request):
         return redirect('/profile/edit')
     mydict = {'userForm': userForm, 'doctorForm': doctorForm}
     return render(request, 'accounts/profileedit.html', context=mydict)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('profileview'))
+        else:
+            return redirect(reverse('change_password'))
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+        args = {'form': form}
+        return render(request, 'accounts/change_password.html', args)
