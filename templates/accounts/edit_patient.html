@@ -1,0 +1,101 @@
+{% extends 'accounts/dashboard_basis.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Edit Patient</h4>
+                        </div>
+                        <div class="card-content">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            {% render_field patientForm.first_name class="form-control" placeholder="First Name" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            {% render_field patientForm.last_name class="form-control" placeholder="Last Name" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Birthday</label>
+                                            {% render_field patientForm.date_naissance class="form-control" placeholder="2001-01-25" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>CIN</label>
+                                            {% render_field patientForm.carte_cin class="form-control" placeholder="00000000" %}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Mobile</label>
+                                            {% render_field patientForm.mobile class="form-control" placeholder="99999999" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            {% render_field patientForm.sexe class="form-control" placeholder="Gender" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            {% render_field patientForm.address class="form-control" placeholder="Address" %}
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Provenance</label>
+                                            {% render_field patientForm.provenance class="form-control" placeholder="provenance" %}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Type Dossier</label>
+                                                {% render_field patientForm.type_dossier class="form-control" placeholder="type_dossier" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}

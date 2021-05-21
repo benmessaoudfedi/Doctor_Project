@@ -7,6 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from Doctor import form
 
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -25,7 +26,6 @@ from Doctor.decorators import allowed_user, unauthenticated_user
 
 def accueil(request):
     return render(request, 'accounts/Home.html')
-
 
 
 def registerPage(request):
@@ -51,9 +51,10 @@ def registerPage(request):
                 my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
                 my_doctor_group[0].user_set.add(user)
             return redirect('login')
-        return render(request, 'accounts/register.html', context=mydict)
 
+    mydict = {'userForm': userForm, 'doctorForm': doctorForm}
 
+    return render(request, 'accounts/register.html', context=mydict)
 
 
 def loginPage(request):
@@ -117,6 +118,7 @@ def profileedit(request):
     mydict = {'userForm': userForm, 'doctorForm': doctorForm}
     return render(request, 'accounts/profileedit.html', context=mydict)
 
+@login_required(login_url='login')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -132,3 +134,46 @@ def change_password(request):
 
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
+
+
+@login_required(login_url='login')
+def AddPatient(request):
+    patientForm = form.PatientForm()
+    user=request.user.doctor
+    mydict = {'patientForm': patientForm,'user':user}
+    if request.method == 'POST':
+        patientForm = form.PatientForm(request.POST)
+        if patientForm.is_valid():
+            patientForm= patientForm.save(commit=False)
+            patientForm.doctor=request.user.doctor
+            patientForm.save()
+            return redirect('add_patient')
+
+    return render(request, 'accounts/add_patient.html', mydict)
+
+
+@login_required(login_url='login')
+def doctor_list_patients(request):
+    patients=Patient.objects.all().filter(doctor_id=request.user.doctor)
+    args = {'patients': patients}
+    return render(request,'accounts/doctor_list_patients.html',context=args)
+
+
+@login_required(login_url='login')
+def EditPatient(request,pk):
+    patient= Patient.objects.get(id=pk)
+    patientForm = form.PatientEditForm(instance=patient)
+    mydict = {'patientForm': patientForm}
+    if request.method == 'POST':
+        patientForm = form.PatientForm(request.POST, instance=patient)
+        if patientForm.is_valid():
+            patientForm.save()
+            return redirect('list_patients')
+
+    return render(request, 'accounts/edit_patient.html', mydict)\
+
+@login_required(login_url='login')
+def DeletePatient(request,pk):
+    patient= Patient.objects.get(id=pk)
+    patient.delete()
+    return redirect('list_patients')

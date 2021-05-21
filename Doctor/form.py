@@ -26,3 +26,16 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'username', 'email']
+
+
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = models.Patient
+        fields = '__all__'
+        exclude=['doctor','doctors']
+
+class PatientEditForm(forms.ModelForm):
+    class Meta:
+        model = models.Patient
+        fields = ['first_name', 'last_name', 'address', 'date_naissance', 'mobile', 'carte_cin', 'sexe', 'type_dossier', 'provenance']
+

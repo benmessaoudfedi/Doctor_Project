@@ -13,7 +13,11 @@ urlpatterns = [
     path('profile/', views.profileview, name="profileview"),
     path('profile/edit/', views.profileedit, name="profileedit"),
     path('change-password/',views.change_password, name='change_password'),
+    path('patients-list/', views.doctor_list_patients, name='list_patients'),
 
+    path('add-patient/', views.AddPatient, name='add_patient'),
+    path('edit-patient/<int:pk>', views.EditPatient, name='edit_patient'),
+    path('delete-patient/<int:pk>', views.DeletePatient, name='delete_patient'),
 
     path('reset_password/',
          auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),
