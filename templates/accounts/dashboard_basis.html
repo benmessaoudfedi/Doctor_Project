@@ -174,21 +174,6 @@
         });
 
 
-        var table = $('#datatables').DataTable();
-        // Edit record
-        table.on('click', '.edit', function () {
-            $tr = $(this).closest('tr');
-
-            var data = table.row($tr).data();
-            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-        });
-
-
-        //Like record
-        table.on('click', '.like', function () {
-            alert('You clicked on Like button');
-        });
-
         $(document).on('click', '.confirm-delete', function () {
             return confirm('Are you sure you want to delete this?');
         })

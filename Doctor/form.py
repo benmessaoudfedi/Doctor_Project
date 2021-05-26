@@ -39,3 +39,16 @@ class PatientEditForm(forms.ModelForm):
         model = models.Patient
         fields = ['first_name', 'last_name', 'address', 'date_naissance', 'mobile', 'carte_cin', 'sexe', 'type_dossier', 'provenance']
 
+class ConsultationForm(forms.ModelForm):
+    class Meta:
+        model = models.Consultation
+        fields = '__all__'
+        exclude=['doctor', 'patient']
+
+class DirectConsultationForm(forms.ModelForm):
+    patient = forms.ModelChoiceField(queryset=models.Patient.objects.all(),empty_label="Patient Name")
+    class Meta:
+        model = models.Consultation
+        fields = '__all__'
+        exclude=['doctor']
+

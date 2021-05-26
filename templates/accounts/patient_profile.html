@@ -1,0 +1,95 @@
+{% extends 'accounts/dashboard_basis.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="card card-user">
+                        <div class="image">
+                            <img src="{% static '/assets/img/background.jpg' %}" alt="..."/>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <p class="">{{ patient.first_name }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <p class="">{{ patient.last_name }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <p class="">{{ patient.sexe }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Birthday</label>
+                                        <p class="">{{ patient.date_naissance }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CIN</label>
+                                        <p class="">{{ patient.carte_cin }}</p>
+
+                                    </div>
+                                </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Provenance</label>
+                                        <p class="">{{ patient.provenance }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Type Dossier</label>
+                                        <p class="">{{ patient.type_dossier }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <p class="">{{ patient.address }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <a href="{% url 'add_consultation' patient.id  %}" class="btn btn-primary btn-fill btn-wd">Add Consultation</a>
+                                        <a href="{% url 'edit_patient' patient.id  %}" class="btn btn-primary btn-fill btn-wd">Edit Patient </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,58 @@
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                            <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                        <h4 class="title">Patients List</h4>
+                    </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="toolbar">
+                                <!--Here you can write extra buttons/actions for the toolbar-->
+                            </div>
+                            <div class="fresh-datatables">
+                                <table id="datatables" class="table table-striped table-no-bordered table-hover"
+                                       cellspacing="0" width="100%" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Mobile</th>
+                                        <th>Birthday</th>
+                                        <th>Gender</th>
+                                        <th>Provenance</th>
+                                        <th>CIN</th>
+                                        <th>Type Dossier</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for patient in patients %}
+
+                                        <tr>
+                                            <td>{{ patient.first_name }}</td>
+                                            <td>{{ patient.last_name }}</td>
+                                            <td>{{ patient.mobile }}</td>
+                                            <td>{{ patient.date_naissance }}</td>
+                                            <td>{{ patient.sexe }}</td>
+                                            <td>{{ patient.provenance }}</td>
+                                            <td>{{ patient.carte_cin }}</td>
+                                            <td>{{ patient.type_dossier }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div><!--  end card  -->
+                </div> <!-- end col-md-12 -->
+            </div> <!-- end row -->
+        </div>
+    </div>

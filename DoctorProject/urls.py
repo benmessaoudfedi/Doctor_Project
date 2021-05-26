@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from Doctor import views
+from Doctor import views, pdfviews
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -18,6 +18,17 @@ urlpatterns = [
     path('add-patient/', views.AddPatient, name='add_patient'),
     path('edit-patient/<int:pk>', views.EditPatient, name='edit_patient'),
     path('delete-patient/<int:pk>', views.DeletePatient, name='delete_patient'),
+    path('add-consultation/<int:pk>', views.AddConsultation, name='add_consultation'),
+    path('add-consultation/', views.AddDirectConsultation, name='add_direct_consultation'),
+    path('consultations-list/', views.doctor_list_consultations, name='list_consultations'),
+    path('delete-consultation/<int:pk>', views.DeleteConsultation, name='delete_consultation'),
+    path('patient-profile/<int:pk>', views.PatientProfile, name='patient_profile'),
+    path('edit-consultation/<int:pk>', views.EditConsultation, name='edit_consultation'),
+    path('consultation/<int:pk>', views.ConsultationView, name='view_consultation'),
+
+    path('list-consultations-pdf/', pdfviews.listconsultationspdfviews.as_view(), name="list_consultation_pdf"),
+    path('consultations-pdf/<int:pk>', pdfviews.consultationspdfviews.as_view(), name="consultation_pdf"),
+    path('list-patients-pdf/', pdfviews.listpatientspdfviews.as_view(), name="list_patients_pdf"),
 
     path('reset_password/',
          auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),

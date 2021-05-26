@@ -4,6 +4,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordChangeForm
+from datetime import datetime, timedelta
 
 from Doctor import form
 
@@ -87,10 +88,21 @@ def logoutUser(request):
 @login_required(login_url='login')
 def home(request):
     accountapproval = Doctor.objects.all().filter(user_id=request.user.id, status=True)
+    today = datetime.today().date()
+
+    patients = Patient.objects.all().filter(doctor_id=request.user.doctor)  # show the list
+    patients_count = patients.count()
+    consultations = Consultation.objects.filter(doctor=request.user.doctor)
+    consultations_count = consultations.count()
+
+    mydict = {
+        'patients_count': patients_count,
+        'consultations_count': consultations_count
+    }
     if request.user.is_authenticated and request.user.is_superuser:
         return redirect('/admin')
     elif request.user.is_authenticated and accountapproval:
-        return render(request, 'accounts/dashboard.html')
+        return render(request, 'accounts/dashboard.html', mydict)
     else:
         return render(request, 'accounts/doctor_wait_for_approval.html')
 
@@ -170,10 +182,79 @@ def EditPatient(request,pk):
             patientForm.save()
             return redirect('list_patients')
 
-    return render(request, 'accounts/edit_patient.html', mydict)\
+    return render(request, 'accounts/edit_patient.html', mydict)
 
 @login_required(login_url='login')
 def DeletePatient(request,pk):
     patient= Patient.objects.get(id=pk)
     patient.delete()
     return redirect('list_patients')
+
+@login_required(login_url='login')
+def AddDirectConsultation(request):
+    consultationForm = form.DirectConsultationForm()
+    mydict = {'consultationForm': consultationForm}
+    if request.method == 'POST':
+        consultationForm = form.DirectConsultationForm(request.POST)
+        if consultationForm.is_valid():
+            consultationForm = consultationForm.save(commit=False)
+            consultationForm.doctor = request.user.doctor
+            consultationForm.save()
+            return redirect('list_consultations')
+    return render(request, 'accounts/add_direct_consultation.html', mydict)
+
+
+@login_required(login_url='login')
+def AddConsultation(request,pk):
+    consultationForm = form.ConsultationForm()
+    patient = Patient.objects.get(id=pk)
+    mydict = {'consultationForm': consultationForm, 'patient':patient}
+    if request.method == 'POST':
+        consultationForm = form.ConsultationForm(request.POST)
+        if consultationForm.is_valid():
+            consultationForm = consultationForm.save(commit=False)
+            consultationForm.doctor = request.user.doctor
+            consultationForm.patient = patient
+            consultationForm.save()
+            return redirect('list_consultations')
+
+    return render(request, 'accounts/add_consultation.html', mydict)
+
+@login_required(login_url='login')
+def doctor_list_consultations(request):
+    consultation = Consultation.objects.filter(doctor=request.user.doctor).select_related()
+    args = {'consultation': consultation}
+    return render(request,'accounts/doctor_list_consultations.html',context=args)
+
+
+@login_required(login_url='login')
+def DeleteConsultation(request,pk):
+    consultation= Consultation.objects.get(id=pk)
+    consultation.delete()
+    return redirect('list_consultations')
+
+@login_required(login_url='login')
+def PatientProfile(request,pk):
+    patient= Patient.objects.get(id=pk)
+    args = {'patient': patient}
+    return render(request, 'accounts/patient_profile.html', args)
+
+@login_required(login_url='login')
+def EditConsultation(request,pk):
+    consultation= Consultation.objects.get(id=pk)
+    consultationForm = form.ConsultationForm(instance=consultation)
+    mydict = {'consultationForm': consultationForm}
+    if request.method == 'POST':
+        consultationForm = form.ConsultationForm(request.POST, instance=consultation)
+        if consultationForm.is_valid():
+            consultationForm.save()
+            return redirect('view_consultation',pk)
+
+    return render(request, 'accounts/edit_consultation.html', mydict)
+
+
+@login_required(login_url='login')
+def ConsultationView(request,pk):
+    consultation= Consultation.objects.select_related().get(id=pk)
+    args = {'consultation': consultation}
+    return render(request, 'accounts/view_consultation.html', args)

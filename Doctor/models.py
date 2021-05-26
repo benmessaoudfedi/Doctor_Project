@@ -69,10 +69,12 @@ class Patient(models.Model):
     doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE, related_name='doctor')
     doctors = models.ManyToManyField(Doctor, through='Consultation', related_name='doctorconsultation')
 
+    def __str__ (self):
+        return "{} {}".format(self.first_name,self.last_name)
 
 class Consultation(models.Model):
-    doctor = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     date= models.DateField()
     description =models.TextField()
     symptoms = models.TextField()

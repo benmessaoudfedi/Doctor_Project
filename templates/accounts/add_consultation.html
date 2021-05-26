@@ -1,0 +1,58 @@
+{% extends 'accounts/dashboard_basis.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Add Consultation to:  {{ patient.first_name }} {{ patient.last_name }}</h4>
+                        </div>
+                        <div class="card-content">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Consultation Date</label>
+                                            {% render_field consultationForm.date class="form-control" placeholder="2021-05-21" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                   <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            {% render_field consultationForm.description class="form-control" placeholder="Description" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Symptoms</label>
+                                            {% render_field consultationForm.symptoms class="form-control" placeholder="Symptoms" %}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Add Consultation</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}
