@@ -13,6 +13,13 @@ Gender=[('Male','Male'),
 ('Female','Female')
 ]
 
+type_dossier1=[('c1','c1'),
+('c2','c2'),
+('c3','c3'),
+('c4','c4'),
+('c5','c5')
+]
+
 Provenance=[('Tunis','Tunis'),
 ('Ariana','Ariana'),
 ('Ben Arous','Ben Arous'),
@@ -61,10 +68,10 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=40,null=True, blank=True)
     address = models.CharField(max_length=40,null=True, blank=True)
     date_naissance = models.DateField(null=True, blank=True)
-    mobile = models.CharField(max_length=20,null=True, blank=True)
-    carte_cin= models.CharField(max_length=40,null=True, blank=True)
+    mobile = models.IntegerField()
+    carte_cin= models.IntegerField()
     sexe= models.CharField(max_length=40,choices=Gender,default='Male')
-    type_dossier= models.CharField(max_length=40,null=True, blank=True)
+    type_dossier= models.CharField(max_length=40,choices=type_dossier1)
     provenance= models.CharField(max_length=40,choices=Provenance,default='Tunis')
     doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE, related_name='doctor')
     doctors = models.ManyToManyField(Doctor, through='Consultation', related_name='doctorconsultation')
