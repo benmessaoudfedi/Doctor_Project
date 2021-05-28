@@ -1,5 +1,8 @@
 {% extends 'accounts/dashboard_basis.html' %}
 {% load static %}
+{% block title %}
+<title> Consultations List</title>
+{% endblock title %}
 {% block content %}
     <div class="content">
         <div class="container-fluid">
@@ -7,13 +10,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-9">
-                        <h4 class="title">Consultations List</h4>
-                    </div>
-                    <div class="col-md-3">
+                            <h4 class="title">Consultations List</h4>
+                        </div>
+                        <div class="col-md-3">
 
-                        <a href="{% url 'list_consultation_pdf' %}" class="btn btn-wd btn-danger"> <i
-                                class="fas fa-file-pdf"></i> List Consultations PDF</a>
-                    </div>
+                            <a href="{% url 'list_consultation_pdf' %}" class="btn btn-wd btn-danger"> <i
+                                    class="fas fa-file-pdf"></i> List Consultations PDF</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -60,10 +63,13 @@
                                             <td>{{ consul.symptoms }}</td>
 
                                             <td>
+                                                <a href="{% url 'images_upload' consul.id %}"
+                                                   class="btn btn-simple btn-info btn-icon like"><i
+                                                        class="fa fa-plus-circle"></i></a>
                                                 <a href="{% url 'view_consultation' consul.id %}"
                                                    class="btn btn-simple btn-info btn-icon like"><i
                                                         class="ti-eye"></i></a>
-
+                                                <br>
                                                 <a href="{% url 'edit_consultation' consul.id %}"
                                                    class="btn btn-simple btn-warning btn-icon edit"><i
                                                         class="ti-pencil-alt"></i></a>

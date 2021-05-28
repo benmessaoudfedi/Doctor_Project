@@ -52,3 +52,8 @@ class DirectConsultationForm(forms.ModelForm):
         fields = '__all__'
         exclude=['doctor']
 
+class ImagesForm(forms.ModelForm):
+    class Meta:
+        model = models.Images
+        fields = ['Image_Consultation', 'model_image']
+        exclude=['Consultation']

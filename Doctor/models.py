@@ -80,7 +80,7 @@ class Consultation(models.Model):
     symptoms = models.TextField()
 
 class Images(models.Model):
-    Image_Consultation = models.ImageField(upload_to='static/assets/ConsultationImages/', null=False, blank=False)
+    Image_Consultation = models.FileField(upload_to='static/assets/ConsultationImages/', null=False, blank=False)
     Consultation = models.ForeignKey('Consultation', on_delete=models.CASCADE)
     model_image=models.CharField(max_length=30,null=True, blank=True)
 
