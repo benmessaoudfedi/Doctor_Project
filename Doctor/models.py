@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from DoctorProject import settings
+from django.core.validators import FileExtensionValidator
+
 departments=[('Cardiologist','Cardiologist'),
 ('Dermatologists','Dermatologists'),
 ('Emergency Medicine Specialists','Emergency Medicine Specialists'),
@@ -11,6 +13,13 @@ departments=[('Cardiologist','Cardiologist'),
 
 Gender=[('Male','Male'),
 ('Female','Female')
+]
+
+type_dossier1=[('c1','c1'),
+('c2','c2'),
+('c3','c3'),
+('c4','c4'),
+('c5','c5')
 ]
 
 Provenance=[('Tunis','Tunis'),
@@ -62,9 +71,9 @@ class Patient(models.Model):
     address = models.CharField(max_length=40,null=True, blank=True)
     date_naissance = models.DateField(null=True, blank=True)
     mobile = models.CharField(max_length=20,null=True, blank=True)
-    carte_cin= models.CharField(max_length=40,null=True, blank=True)
+    carte_cin= models.CharField(max_length=8,null=True, blank=True)
     sexe= models.CharField(max_length=40,choices=Gender,default='Male')
-    type_dossier= models.CharField(max_length=40,null=True, blank=True)
+    type_dossier= models.CharField(max_length=40,choices=type_dossier1)
     provenance= models.CharField(max_length=40,choices=Provenance,default='Tunis')
     doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE, related_name='doctor')
     doctors = models.ManyToManyField(Doctor, through='Consultation', related_name='doctorconsultation')
@@ -80,7 +89,7 @@ class Consultation(models.Model):
     symptoms = models.TextField()
 
 class Images(models.Model):
-    Image_Consultation = models.FileField(upload_to='static/assets/ConsultationImages/', null=False, blank=False)
+    Image_Consultation = models.FileField(upload_to='static/assets/ConsultationImages/', null=False, blank=False,validators=[FileExtensionValidator( ['dcm'] ) ])
     Consultation = models.ForeignKey('Consultation', on_delete=models.CASCADE)
     model_image=models.CharField(max_length=30,null=True, blank=True)
 

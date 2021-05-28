@@ -65,11 +65,12 @@ def registerPage(request):
                 doctor.save()
                 my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
                 my_doctor_group[0].user_set.add(user)
-            return redirect('login')
+                return redirect('login')
+            else:
+                mydict['userForm'] = userForm
+                return render(request, 'accounts/register.html', mydict)
 
-    mydict = {'userForm': userForm, 'doctorForm': doctorForm}
-
-    return render(request, 'accounts/register.html', context=mydict)
+    return render(request, 'accounts/register.html', mydict)
 
 
 def loginPage(request):
@@ -172,8 +173,11 @@ def AddPatient(request):
             patientForm = patientForm.save(commit=False)
             patientForm.doctor = request.user.doctor
             patientForm.save()
+            messages.success(request, 'New patient was created')
             return redirect('add_patient')
-
+        else:
+            mydict['patientForm'] = patientForm
+            return render(request, 'accounts/add_patient.html', mydict)
     return render(request, 'accounts/add_patient.html', mydict)
 
 

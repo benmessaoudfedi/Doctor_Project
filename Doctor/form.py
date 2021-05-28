@@ -15,6 +15,27 @@ class CreateUserForm(UserCreationForm):
 
         }
 
+    def clean(self):
+
+        # data from the form is fetched using super function
+        super(CreateUserForm, self).clean()
+
+        # extract the username and text field from the data
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        p1 = self.cleaned_data.get('password1')
+        p2 = self.cleaned_data.get('password2')
+        # conditions to be met for the username length
+        if len(username) < 5:
+            raise forms.ValidationError({"username": "not valid user name"})
+        if (len(p1) or len(p2)) < 8:
+            raise forms.ValidationError({"password1": "'not valid user password'"})
+        if p1 != p2:
+            raise forms.ValidationError({"password2": "passwods not much"})
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email exists")
+        # return any errors if found
+        return self.cleaned_data
 
 class DoctorForm(forms.ModelForm):
     class Meta:
@@ -33,6 +54,19 @@ class PatientForm(forms.ModelForm):
         model = models.Patient
         fields = '__all__'
         exclude=['doctor','doctors']
+    def clean(self):
+
+        # data from the form is fetched using super function
+        super(PatientForm, self).clean()
+
+        # extract the username and text field from the data
+        carte_cin = self.cleaned_data.get('carte_cin')
+        # conditions to be met for the username length
+        if len(str(carte_cin)) != 8 or not(str(carte_cin).isdigit()):
+            raise forms.ValidationError({"carte_cin": "Invalid CIN, 8 Digits "})
+        return self.cleaned_data
+
+
 
 class PatientEditForm(forms.ModelForm):
     class Meta:

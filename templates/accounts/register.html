@@ -115,6 +115,36 @@
                                 <div class="footer text-center">
                                     <button type="submit" class="btn btn-fill btn-danger btn-wd">Register Account
                                     </button>
+
+                                <br><br><br>
+ {% if doctorForm.errors %}
+    {% for field in doctorForm %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in doctorForm.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+{% if userForm.errors %}
+    {% for field in userForm %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in userForm.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
                                  </div>
                             </div>
                         </form>
