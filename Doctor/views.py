@@ -348,7 +348,7 @@ def ajax_server(request,pk):
 
     except Exception as e:
         traceback.print_tb(e)
-    mydict = {'d': d}
+    mydict = {'d': d, 'images':images}
     #return JsonResponse(d)
     return render(request, 'accounts/show_images.html', mydict)
 
@@ -368,13 +368,13 @@ def edit_consultation_image(request, pk):
     imageForm = form.ImagesForm(instance=image)
     mydict = {'imageForm': imageForm}
     if request.method == 'POST':
-        imageForm = form.ImagesForm(request.POST, instance=consultation)
+        imageForm = form.ImagesForm(request.POST, instance=image)
         if imageForm.is_valid():
             imageForm.save()
             return redirect('consultation_image', pk)
-
-
     return render(request, 'accounts/edit_consultation_image.html', mydict)
+
+
 @login_required(login_url='login')
 def delete_image(request,fk, pk):
     image = Images.objects.get(id=pk)

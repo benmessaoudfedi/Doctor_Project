@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'accounts/dashboard_basis.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+    <title> Edit Image</title>
+{% endblock title %}
+{% block content %}
 
-</body>
-</html>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Edit Image</h4>
+                        </div>
+                        <div class="card-content">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Model Image</label>
+                                            {% render_field imageForm.model_image class="form-control" placeholder="Model Image" %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            {% render_field imageForm.Image_Consultation class="form-control" %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Image
+                                    </button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}
