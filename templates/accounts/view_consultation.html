@@ -1,7 +1,7 @@
 {% extends 'accounts/dashboard_basis.html' %}
 {% load static %}
 {% block title %}
-<title> Consultation</title>
+    <title> Consultation</title>
 {% endblock title %}
 {% block content %}
 
@@ -42,7 +42,6 @@
                                     <div class="form-group">
                                         <label>Symptoms</label>
                                         <p class="">{{ consultation.symptoms }}</p>
-
                                     </div>
                                 </div>
                             </div>
@@ -58,8 +57,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <a href="/change-password" class="btn btn-primary btn-fill btn-wd">Change
-                                            Password</a>
+                                        {% if images %}
+                                            <a href="{% url 'consultation_list_images' consultation.id %}"
+                                               class="btn btn-primary btn-fill btn-wd">List Images</a>
+                                        {% endif %}
+                                        <a href="{% url 'images_upload' consultation.id %}"
+                                           class="btn btn-primary btn-fill btn-wd">Add Image</a>
                                         <a href="{% url 'edit_consultation' consultation.id %}"
                                            class="btn btn-primary btn-fill btn-wd">Edit
                                             Consultation</a>

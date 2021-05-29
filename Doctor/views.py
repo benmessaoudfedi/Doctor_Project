@@ -3,7 +3,7 @@ import os
 import time
 import traceback
 from io import BytesIO
-
+from django.http import HttpResponseRedirect
 import imageio
 import matplotlib.pyplot as plt
 from django.core.files.storage import FileSystemStorage
@@ -220,6 +220,9 @@ def AddDirectConsultation(request):
             consultationForm.doctor = request.user.doctor
             consultationForm.save()
             return redirect('list_consultations')
+        else:
+            mydict['consultationForm'] = consultationForm
+            return render(request, 'accounts/add_direct_consultation.html', mydict)
     return render(request, 'accounts/add_direct_consultation.html', mydict)
 
 
@@ -236,6 +239,9 @@ def AddConsultation(request, pk):
             consultationForm.patient = patient
             consultationForm.save()
             return redirect('list_consultations')
+        else:
+            mydict['consultationForm'] = consultationForm
+            return render(request, 'accounts/add_consultation.html', mydict)
 
     return render(request, 'accounts/add_consultation.html', mydict)
 
@@ -278,7 +284,8 @@ def EditConsultation(request, pk):
 @login_required(login_url='login')
 def ConsultationView(request, pk):
     consultation = Consultation.objects.select_related().get(id=pk)
-    args = {'consultation': consultation}
+    images = Images.objects.filter(Consultation=consultation)
+    args = {'consultation': consultation,'images':images}
     return render(request, 'accounts/view_consultation.html', args)
 
 
@@ -293,7 +300,7 @@ def images_upload(request, pk):
             ImageForm = ImageForm.save(commit=False)
             ImageForm.Consultation = consultation
             ImageForm.save()
-            return redirect('list_consultations')
+            return redirect('view_consultation',pk)
 
     return render(request, 'accounts/add_images.html', mydict)
 
@@ -347,3 +354,29 @@ def ajax_server(request,pk):
 
 
 
+
+@login_required(login_url='login')
+def consultation_list_images(request,pk):
+    images = Images.objects.filter(Consultation=pk)
+    args = {'images': images}
+    return render(request, 'accounts/consultation_list_images.html', args)
+
+
+@login_required(login_url='login')
+def edit_consultation_image(request, pk):
+    image = Images.objects.get(id=pk)
+    imageForm = form.ImagesForm(instance=image)
+    mydict = {'imageForm': imageForm}
+    if request.method == 'POST':
+        imageForm = form.ImagesForm(request.POST, instance=consultation)
+        if imageForm.is_valid():
+            imageForm.save()
+            return redirect('consultation_image', pk)
+
+
+    return render(request, 'accounts/edit_consultation_image.html', mydict)
+@login_required(login_url='login')
+def delete_image(request,fk, pk):
+    image = Images.objects.get(id=pk)
+    image.delete()
+    return redirect('view_consultation', fk)

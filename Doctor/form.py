@@ -78,6 +78,11 @@ class ConsultationForm(forms.ModelForm):
         model = models.Consultation
         fields = '__all__'
         exclude=['doctor', 'patient']
+    def clean(self):
+
+        # data from the form is fetched using super function
+        super(ConsultationForm, self).clean()
+        return self.cleaned_data
 
 class DirectConsultationForm(forms.ModelForm):
     patient = forms.ModelChoiceField(queryset=models.Patient.objects.all(),empty_label="Patient Name")
@@ -91,3 +96,4 @@ class ImagesForm(forms.ModelForm):
         model = models.Images
         fields = ['Image_Consultation', 'model_image']
         exclude=['Consultation']
+

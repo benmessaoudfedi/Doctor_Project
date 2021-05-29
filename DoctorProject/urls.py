@@ -30,8 +30,10 @@ urlpatterns = [
     path('consultations-pdf/<int:pk>', pdfviews.consultationspdfviews.as_view(), name="consultation_pdf"),
     path('list-patients-pdf/', pdfviews.listpatientspdfviews.as_view(), name="list_patients_pdf"),
     path('add-images/<int:pk>', views.images_upload, name='images_upload'),
-
     path('consultation-images/<int:pk>', views.ajax_server,name='consultation_image'),
+    path('images-list/<int:pk>', views.consultation_list_images, name='consultation_list_images'),
+    path('edit-image/<int:pk>', views.edit_consultation_image, name='edit_consultation_image'),
+    path('delete-image<int:pk>/<int:fk>/', views.delete_image, name='delete_image'),
 
     path('reset_password/',
          auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),

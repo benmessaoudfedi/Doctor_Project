@@ -55,6 +55,23 @@
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-info btn-fill btn-wd">Add Consultation</button>
                                 </div>
+                                 <br>
+                                <br>
+                                <br>
+                                {% if consultationForm.errors %}
+    {% for field in consultationForm %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in consultationForm.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
                                 <div class="clearfix"></div>
                             </form>
                         </div>
