@@ -62,8 +62,8 @@ class PatientForm(forms.ModelForm):
         # extract the username and text field from the data
         carte_cin = self.cleaned_data.get('carte_cin')
         # conditions to be met for the username length
-        if len(str(carte_cin)) != 8:
-            raise forms.ValidationError({"carte_cin": "invalid CIN"})
+        if len(str(carte_cin)) != 8 or not(str(carte_cin).isdigit()):
+            raise forms.ValidationError({"carte_cin": "Invalid CIN, 8 Digits "})
         return self.cleaned_data
 
 
@@ -78,6 +78,11 @@ class ConsultationForm(forms.ModelForm):
         model = models.Consultation
         fields = '__all__'
         exclude=['doctor', 'patient']
+    def clean(self):
+
+        # data from the form is fetched using super function
+        super(ConsultationForm, self).clean()
+        return self.cleaned_data
 
 class DirectConsultationForm(forms.ModelForm):
     patient = forms.ModelChoiceField(queryset=models.Patient.objects.all(),empty_label="Patient Name")
@@ -85,4 +90,10 @@ class DirectConsultationForm(forms.ModelForm):
         model = models.Consultation
         fields = '__all__'
         exclude=['doctor']
+
+class ImagesForm(forms.ModelForm):
+    class Meta:
+        model = models.Images
+        fields = ['Image_Consultation', 'model_image']
+        exclude=['Consultation']
 

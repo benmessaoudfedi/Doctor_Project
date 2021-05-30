@@ -1,0 +1,111 @@
+{% extends 'accounts/dashboard_basis.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+    <script src="{% static 'assets/js/panzoom.js' %}"></script>
+{% endblock head %}
+{% block title %}
+    <title> Consultation Image</title>
+{% endblock title %}
+{% block content %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <h5><b>Image Model:</b> {{ images.model_image }}</h5>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="card card-map">
+                    <div class="card-header">
+                        <h4 class="card-title">Consultation Image</h4>
+                    </div>
+
+                    <div class="card-content">
+                        <section>
+                            <div class="parent">
+                                <div class="panzoom" id="panzoom-element">
+                                    <img src="{{ d.url.base64 }}" width="60%" height="60%">
+                                </div>
+                            </div>
+                            <br>
+                            <button type="button" id="zoom-in" class="btn btn-wd btn-warning  btn-fill btn-magnify">
+	                                            <span class="btn-label">
+	                                                <i class="ti-zoom-in"></i>
+	                                            </span>
+                                Zoom In
+                            </button>
+                            <button type="button" id="zoom-out" class="btn btn-wd btn-danger  btn-fill btn-magnify">
+	                                            <span class="btn-label">
+	                                                <i class="ti-zoom-out"></i>
+	                                            </span>
+                                Zoom Out
+                            </button>
+                            <button class="btn btn-default btn-fill btn-wd" id="reset">Reset</button>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock content %}
+{% block javascript %}
+    <script>
+        const elem = document.getElementById('panzoom-element');
+        const zoomInButton = document.getElementById('zoom-in');
+        const zoomOutButton = document.getElementById('zoom-out');
+        const resetButton = document.getElementById('reset');
+        const panzoom = Panzoom(elem);
+        const parent = elem.parentElement
+        // No function bind needed
+        parent.addEventListener('wheel', panzoom.zoomWithWheel);
+        zoomInButton.addEventListener('click', panzoom.zoomIn)
+        zoomOutButton.addEventListener('click', panzoom.zoomOut)
+        resetButton.addEventListener('click', panzoom.reset)
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <script>
+        try {
+            fetch(new Request("../../../pagead2.googlesyndication.com/pagead/js/f.txt", {
+                method: 'HEAD',
+                mode: 'no-cors'
+            })).then(function (response) {
+                return true;
+            }).catch(function (e) {
+                var carbonScript = document.createElement("script");
+                carbonScript.src = "../../../cdn.carbonads.com/carbon9add.js?serve=CK7DKKQU&amp;placement=wwwjqueryscriptnet";
+                carbonScript.id = "_carbonads_js";
+                document.getElementById("carbon-block").appendChild(carbonScript);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    </script>
+{% endblock javascript %}
