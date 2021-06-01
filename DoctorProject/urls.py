@@ -4,10 +4,11 @@ from Doctor import views, pdfviews
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('admin/logout/', views.logoutUser, name='logoutUser'),
     path('admin/', admin.site.urls),
     path('register/', views.registerPage, name="register"),
-	path('login/', views.loginPage, name="login"),
-	path('logout/', views.logoutUser, name="logout"),
+    path('login/', views.loginPage, name="login"),
+    path('logout/', views.logoutUser, name="logout"),
     path('home/', views.home, name="home"),
     path('', views.accueil, name="accueil"),
     path('profile/', views.profileview, name="profileview"),
