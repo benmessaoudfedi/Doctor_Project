@@ -40,7 +40,7 @@ from Doctor.decorators import allowed_user, unauthenticated_user
 
 
 def accueil(request):
-    return render(request, 'accounts/Home.html')
+    return render(request, 'accounts/home.html')
 
 
 def registerPage(request):
@@ -97,7 +97,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('accueil')
 
 
 @login_required(login_url='login')
