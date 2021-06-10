@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from Doctor import views, pdfviews
+from Doctor import views, pdfviews, cloudviews
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -35,6 +35,7 @@ urlpatterns = [
     path('images-list/<int:pk>', views.consultation_list_images, name='consultation_list_images'),
     path('edit-image/<int:pk>', views.edit_consultation_image, name='edit_consultation_image'),
     path('delete-image<int:pk>/<int:fk>/', views.delete_image, name='delete_image'),
+    path('save-to-cloud-image/<int:pk>', cloudviews.save_to_cloud, name='save_to_cloud'),
 
     path('reset_password/',
          auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"),
